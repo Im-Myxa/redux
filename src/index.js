@@ -34,6 +34,7 @@ const App = () => {
   };
 
   const createTask = () => {
+    console.log(state);
     dispatch(taskCreate());
   };
 

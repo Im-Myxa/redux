@@ -11,12 +11,8 @@ const todosServise = {
     });
     return data;
   },
-  create: async (taskId) => {
-    const { data } = await httpServise.post(todosEndpoint, {
-      id: taskId,
-      title: "Тут новая задача",
-      completed: false,
-    });
+  create: async (payload) => {
+    const { data } = await httpServise.post(todosEndpoint, payload);
     return data;
   },
 };

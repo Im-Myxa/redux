@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import todosServise from "../services/toods.service";
 import { setError } from "./errors";
+import { nanoid } from "nanoid";
 
 const initialState = { entities: [], isLoading: true };
 
@@ -33,7 +34,7 @@ const taskSlice = createSlice({
       state.isLoading = false;
     },
     create(state, action) {
-      state.entities = [...state.entities, action.payload];
+      state.entities = [...state.entities, { ...action.payload, id: nanoid() }];
       state.isLoading = false;
     },
   },
@@ -67,9 +68,13 @@ export function taskDelete(id) {
 }
 
 export const taskCreate = () => async (dispatch) => {
+  const task = {
+    title: "Тут новая таска",
+    completed: false,
+  };
   dispatch(taskRequested());
   try {
-    const data = await todosServise.create();
+    const data = await todosServise.create(task);
     dispatch(create({ ...data }));
   } catch (error) {
     dispatch(taskRequestFaild());
